@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Client {
+  id        Int      @id @default(autoincrement())
+  fullName  String   @map("full_name")
+  type      String   // Individual or Corporate
+  taxId     String?  @unique @map("tax_id") // CPF/CNPJ
+  email     String?
+  phone     String?
+  address   String?
+  password  String?
+  createdAt DateTime @default(now()) @map("created_at")
+  cases     Case[]
+
+  @@map("clients")
+}
+
+model Case {
+  id                   Int       @id @default(autoincrement())
+  clientId             Int       @map("client_id")
+  client               Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  caseNumber           String?   @map("case_number")
+  title                String
+  status               String    @default("Pendente") // Concluído, Cancelado, Pendente, Em Andamento
+  protocolStatus       String    @default("Não Protocolado") @map("protocol_status") // Protocolado, Não Protocolado
+  expectedDeliveryDate DateTime? @map("expected_delivery_date") // Previsão do parto
+  gaveBirth            Boolean   @default(false) @map("gave_birth") // Se já pariu
+  birthDate            DateTime? @map("birth_date") // Data do parto
+  court                String?
+  description          String?
+  openedAt             DateTime  @default(now()) @map("opened_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+  documents   Document[]
+  comments    Comment[]
+
+  @@index([clientId])
+  @@map("cases")
+}
+
+model Document {
+  id         Int      @id @default(autoincrement())
+  caseId     Int      @map("case_id")
+  case       Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  name       String
+  fileType   String?  @map("file_type")
+  fileUrl    String   @map("file_url")
+  version    Int      @default(1)
+  uploadedAt DateTime @default(now()) @map("uploaded_at")
+
+  @@index([caseId])
+  @@map("documents")
+}
+
+model Appointment {
+  id          Int      @id @default(autoincrement())
+  title       String
+  date        DateTime
+  type        String   // Audiência, Prazo, Reunião
+  status      String   // Urgent, Normal
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("appointments")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  caseId    Int      @map("case_id")
+  case      Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([caseId])
+  @@map("comments")
+}
+
+model RoutineLog {
+  id        Int      @id @default(autoincrement())
+  type      String
+  status    String
+  message   String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("routine_logs")
+}

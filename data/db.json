@@ -1,0 +1,97 @@
+{
+  "clients": [
+    {
+      "id": 1777323579092,
+      "fullName": "sfgs",
+      "type": "Individual",
+      "email": "sdgsg@qw",
+      "phone": "sdgdg",
+      "taxId": "33333333333",
+      "createdAt": "2026-04-27T20:59:39.092Z"
+    },
+    {
+      "id": 1768246241537,
+      "fullName": "teste",
+      "type": "Individual",
+      "email": "teste@teste.com",
+      "phone": "123123",
+      "taxId": "12312312312",
+      "createdAt": "2026-01-12T19:30:41.537Z"
+    }
+  ],
+  "cases": [
+    {
+      "id": 1768246258304,
+      "title": "caso 1 teste",
+      "clientId": 1768246241537,
+      "court": "",
+      "caseNumber": "",
+      "description": "",
+      "status": "Open",
+      "openedAt": "2026-01-12T19:30:58.304Z",
+      "updatedAt": "2026-01-12T19:30:58.304Z"
+    },
+    {
+      "id": 1777323648115,
+      "title": "TESTE",
+      "clientId": 1768246241537,
+      "court": "",
+      "caseNumber": "",
+      "description": "",
+      "status": "Open",
+      "openedAt": "2026-04-27T21:00:48.115Z",
+      "updatedAt": "2026-04-27T21:00:48.115Z"
+    }
+  ],
+  "documents": [
+    {
+      "id": 1777323691348,
+      "caseId": 1777323648115,
+      "name": "ESTOQUE - Copia.png",
+      "fileType": "image/png",
+      "fileUrl": "/uploads/1777323691324-221385632-ESTOQUE-Copia.png",
+      "version": 1,
+      "uploadedAt": "2026-04-27T21:01:31.348Z"
+    }
+  ],
+  "routineLogs": [
+    {
+      "id": 1777323550486,
+      "type": "Verificação Diária",
+      "status": "Success",
+      "message": "Verificação concluída. 0 clientes sem telefone. 1 processos abertos pendentes de atualização.",
+      "createdAt": "2026-04-27T20:59:10.486Z"
+    },
+    {
+      "id": 1777323548146,
+      "type": "Verificação Diária",
+      "status": "Success",
+      "message": "Verificação concluída. 0 clientes sem telefone. 1 processos abertos pendentes de atualização.",
+      "createdAt": "2026-04-27T20:59:08.146Z"
+    }
+  ],
+  "appointments": [
+    {
+      "id": 1768246475226,
+      "title": "sfasf",
+      "date": "2026-01-14T19:40:00.000Z",
+      "type": "Audiência",
+      "status": "Urgent",
+      "description": "sadfvsdfs"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1777323666129,
+      "caseId": 1777323648115,
+      "content": "SFSDGSG",
+      "createdAt": "2026-04-27T21:01:06.129Z"
+    },
+    {
+      "id": 1777323683106,
+      "caseId": 1777323648115,
+      "content": "USJUARIO MOREI",
+      "createdAt": "2026-04-27T21:01:23.106Z"
+    }
+  ]
+}
