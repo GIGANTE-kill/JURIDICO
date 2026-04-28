@@ -224,6 +224,28 @@ class JsonDB {
         return { ...appt, date: appt.date.toISOString(), createdAt: appt.createdAt.toISOString() };
     }
 
+    async updateAppointment(id: number, apptData: any) {
+        const updateData: any = {};
+        if (apptData.title !== undefined) updateData.title = apptData.title;
+        if (apptData.date !== undefined) updateData.date = new Date(apptData.date);
+        if (apptData.type !== undefined) updateData.type = apptData.type;
+        if (apptData.status !== undefined) updateData.status = apptData.status;
+        if (apptData.description !== undefined) updateData.description = apptData.description || null;
+
+        const appt = await prisma.appointment.update({
+            where: { id },
+            data: updateData
+        });
+        return { ...appt, date: appt.date.toISOString(), createdAt: appt.createdAt.toISOString() };
+    }
+
+    async deleteAppointment(id: number) {
+        await prisma.appointment.delete({
+            where: { id }
+        });
+        return { success: true };
+    }
+
     // --- Comments ---
     async getCommentsByCaseId(caseId: number) {
         const comments = await prisma.comment.findMany({

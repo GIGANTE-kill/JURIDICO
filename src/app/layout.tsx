@@ -17,12 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" suppressHydrationWarning>
+    <html lang="pt-br" suppressHydrationWarning className="dark">
       <body className={inter.className} suppressHydrationWarning>
-        <div className="flex h-screen bg-slate-50">
+        <div className="flex h-screen bg-background text-foreground">
           <Sidebar />
           <CommandMenu />
-          <main className="flex-1 overflow-y-auto p-8 pl-20">
+          <main className="flex-1 overflow-y-auto p-8 pl-20 bg-background">
             {children}
           </main>
         </div>

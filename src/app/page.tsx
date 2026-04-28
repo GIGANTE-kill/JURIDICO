@@ -77,47 +77,47 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900">Visão Geral</h1>
+      <h1 className="text-3xl font-bold tracking-tight text-foreground">Visão Geral</h1>
 
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="floating-surface jade-accent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total de Clientes</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total de Clientes</CardTitle>
+            <Users className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{loading ? "..." : stats.clients}</div>
+            <div className="text-2xl font-bold text-foreground">{loading ? "..." : stats.clients}</div>
             <p className="text-xs text-muted-foreground">Cadastrados no sistema</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="floating-surface jade-accent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Processos Totais</CardTitle>
-            <Briefcase className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-muted-foreground">Processos Totais</CardTitle>
+            <Briefcase className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{loading ? "..." : stats.cases}</div>
+            <div className="text-2xl font-bold text-foreground">{loading ? "..." : stats.cases}</div>
             <p className="text-xs text-muted-foreground">Casos registrados</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="floating-surface jade-accent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Casos Abertos</CardTitle>
-            <Activity className="h-4 w-4 text-blue-500" />
+            <CardTitle className="text-sm font-medium text-muted-foreground">Casos Abertos</CardTitle>
+            <Activity className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-600">{loading ? "..." : stats.openCases}</div>
+            <div className="text-2xl font-bold text-primary">{loading ? "..." : stats.openCases}</div>
             <p className="text-xs text-muted-foreground">Requerem atenção</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="floating-surface jade-accent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Automação</CardTitle>
-            <Activity className="h-4 w-4 text-green-500" />
+            <CardTitle className="text-sm font-medium text-muted-foreground">Automação</CardTitle>
+            <CheckCircle className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-xl font-bold text-green-700">Ativa</div>
+            <div className="text-xl font-bold text-primary">Ativa</div>
             <p className="text-xs text-muted-foreground">Sistema operando</p>
           </CardContent>
         </Card>
@@ -126,24 +126,24 @@ export default function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
 
         {/* Automation Center */}
-        <Card className="col-span-4">
+        <Card className="col-span-4 floating-surface">
           <CardHeader>
-            <CardTitle>Central de Automação</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-foreground">Central de Automação</CardTitle>
+            <CardDescription className="text-muted-foreground">
               Execute rotinas de verificação e monitore atualizações dos casos.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-4 border rounded-lg bg-slate-50">
+            <div className="flex items-center justify-between p-4 border border-white/5 rounded-lg bg-background/40">
               <div className="space-y-1">
-                <h4 className="font-semibold flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-600" /> Verificação de Atualizações
+                <h4 className="font-semibold flex items-center gap-2 text-foreground">
+                  <CheckCircle className="h-4 w-4 text-primary" /> Verificação de Atualizações
                 </h4>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted-foreground">
                   Busca por clientes sem contato e processos &quot;parados&quot; há mais de 30 dias.
                 </p>
               </div>
-              <Button onClick={runRoutine} disabled={runningRoutine}>
+              <Button onClick={runRoutine} disabled={runningRoutine} className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg shadow-primary/20">
                 {runningRoutine ? (
                   "Executando..."
                 ) : (
@@ -153,20 +153,20 @@ export default function DashboardPage() {
             </div>
 
             <div>
-              <h4 className="font-medium mb-3 text-sm text-slate-500 mt-6">Histórico de Execuções</h4>
+              <h4 className="font-medium mb-3 text-sm text-muted-foreground mt-6">Histórico de Execuções</h4>
               <div className="space-y-2">
                 {logs.length === 0 ? (
-                  <div className="text-sm text-center py-4 text-slate-400">Nenhuma execução recente.</div>
+                  <div className="text-sm text-center py-4 text-muted-foreground">Nenhuma execução recente.</div>
                 ) : (
                   logs.map(log => (
-                    <div key={log.id} className="flex items-start gap-4 p-3 rounded-md border text-sm">
+                    <div key={log.id} className="flex items-start gap-4 p-3 rounded-md border border-white/5 bg-background/20 text-sm">
                       <div className="mt-0.5">
-                        <CheckCircle className="h-4 w-4 text-green-500" />
+                        <CheckCircle className="h-4 w-4 text-primary" />
                       </div>
                       <div>
-                        <div className="font-medium text-slate-900">{log.type}</div>
-                        <div className="text-slate-500">{log.message}</div>
-                        <div className="text-xs text-slate-400 mt-1">
+                        <div className="font-medium text-foreground">{log.type}</div>
+                        <div className="text-muted-foreground">{log.message}</div>
+                        <div className="text-xs text-muted-foreground/60 mt-1">
                           {new Date(log.createdAt).toLocaleString("pt-BR")}
                         </div>
                       </div>
@@ -178,39 +178,39 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Quick Links / Recent Activity Placeholder */}
-        <Card className="col-span-3">
+        {/* Quick Links */}
+        <Card className="col-span-3 floating-surface">
           <CardHeader>
-            <CardTitle>Acesso Rápido</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-foreground">Acesso Rápido</CardTitle>
+            <CardDescription className="text-muted-foreground">
               Navegue pelas principais funções do sistema.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-2">
-            <Button variant="outline" className="h-20 justify-start px-4" asChild>
+            <Button variant="outline" className="h-20 justify-start px-4 border-white/5 hover:bg-white/5 hover:text-primary transition-all group" asChild>
               <Link href="/cases" className="flex items-center gap-4">
-                <Briefcase className="h-8 w-8 text-blue-500" />
+                <Briefcase className="h-8 w-8 text-primary group-hover:scale-110 transition-transform" />
                 <div className="text-left">
-                  <div className="font-semibold">Gerir Processos</div>
-                  <div className="text-xs text-slate-500">Acompanhar andamento</div>
+                  <div className="font-semibold text-foreground group-hover:text-primary">Gerir Processos</div>
+                  <div className="text-xs text-muted-foreground">Acompanhar andamento</div>
                 </div>
               </Link>
             </Button>
-            <Button variant="outline" className="h-20 justify-start px-4" asChild>
+            <Button variant="outline" className="h-20 justify-start px-4 border-white/5 hover:bg-white/5 hover:text-primary transition-all group" asChild>
               <Link href="/clients" className="flex items-center gap-4">
-                <Users className="h-8 w-8 text-indigo-500" />
+                <Users className="h-8 w-8 text-primary group-hover:scale-110 transition-transform" />
                 <div className="text-left">
-                  <div className="font-semibold">Base de Clientes</div>
-                  <div className="text-xs text-slate-500">Cadastrar ou editar</div>
+                  <div className="font-semibold text-foreground group-hover:text-primary">Base de Clientes</div>
+                  <div className="text-xs text-muted-foreground">Cadastrar ou editar</div>
                 </div>
               </Link>
             </Button>
-            <Button variant="outline" className="h-20 justify-start px-4" asChild>
+            <Button variant="outline" className="h-20 justify-start px-4 border-white/5 hover:bg-white/5 hover:text-primary transition-all group" asChild>
               <Link href="/calendar" className="flex items-center gap-4">
-                <Activity className="h-8 w-8 text-orange-500" />
+                <Activity className="h-8 w-8 text-primary group-hover:scale-110 transition-transform" />
                 <div className="text-left">
-                  <div className="font-semibold">Agenda</div>
-                  <div className="text-xs text-slate-500">Prazos e reuniões</div>
+                  <div className="font-semibold text-foreground group-hover:text-primary">Agenda</div>
+                  <div className="text-xs text-muted-foreground">Prazos e reuniões</div>
                 </div>
               </Link>
             </Button>

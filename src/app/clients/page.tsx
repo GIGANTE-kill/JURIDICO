@@ -57,52 +57,52 @@ export default function ClientsPage() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Clientes</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-foreground">Clientes</h1>
                 <NewClientDialog />
             </div>
 
             <div className="flex items-center gap-4">
                 <div className="relative flex-1 max-w-sm">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                    <Input placeholder="Buscar clientes..." className="pl-9" />
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input placeholder="Buscar clientes..." className="pl-9 bg-background/50 border-white/5 text-foreground focus:border-primary/50 focus:ring-primary/20" />
                 </div>
             </div>
 
-            <Card>
-                <CardHeader className="p-4">
-                    <CardTitle className="text-base">Listagem de Clientes</CardTitle>
+            <Card className="floating-surface">
+                <CardHeader className="p-4 border-b border-white/5">
+                    <CardTitle className="text-base text-foreground">Listagem de Clientes</CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
                     <Table>
                         <TableHeader>
-                            <TableRow>
-                                <TableHead>Nome</TableHead>
-                                <TableHead>Tipo</TableHead>
-                                <TableHead>Email</TableHead>
-                                <TableHead>Telefone</TableHead>
-                                <TableHead className="text-right">Ações</TableHead>
+                            <TableRow className="border-b border-white/5 hover:bg-transparent">
+                                <TableHead className="text-muted-foreground">Nome</TableHead>
+                                <TableHead className="text-muted-foreground">Tipo</TableHead>
+                                <TableHead className="text-muted-foreground">Email</TableHead>
+                                <TableHead className="text-muted-foreground">Telefone</TableHead>
+                                <TableHead className="text-right text-muted-foreground">Ações</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {loading ? (
-                                <TableRow>
-                                    <TableCell colSpan={5} className="h-24 text-center">Carregando...</TableCell>
+                                <TableRow className="border-b border-white/5">
+                                    <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">Carregando...</TableCell>
                                 </TableRow>
                             ) : clients.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={5} className="h-24 text-center text-gray-500">Nenhum cliente encontrado.</TableCell>
+                                <TableRow className="border-b border-white/5">
+                                    <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">Nenhum cliente encontrado.</TableCell>
                                 </TableRow>
                             ) : (
                                 clients.map((client) => (
-                                    <TableRow key={client.id}>
-                                        <TableCell className="font-medium">{client.fullName}</TableCell>
+                                    <TableRow key={client.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                        <TableCell className="font-medium text-foreground">{client.fullName}</TableCell>
                                         <TableCell>
-                                            <Badge variant="outline">{client.type}</Badge>
+                                            <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5">{client.type}</Badge>
                                         </TableCell>
-                                        <TableCell>{client.email || "-"}</TableCell>
-                                        <TableCell>{client.phone || "-"}</TableCell>
+                                        <TableCell className="text-muted-foreground">{client.email || "-"}</TableCell>
+                                        <TableCell className="text-muted-foreground">{client.phone || "-"}</TableCell>
                                         <TableCell className="text-right">
-                                            <Button variant="ghost" size="sm">Editar</Button>
+                                            <Button variant="ghost" size="sm" className="hover:bg-primary/10 hover:text-primary text-muted-foreground">Ver Detalhes</Button>
                                         </TableCell>
                                     </TableRow>
                                 ))

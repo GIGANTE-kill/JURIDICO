@@ -9,7 +9,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,21 +21,37 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus } from "lucide-react";
-import { format } from "date-fns";
 
-export function NewAppointmentDialog() {
-    const [open, setOpen] = useState(false);
+export function EditAppointmentDialog({
+    appointment,
+    open,
+    onOpenChange,
+    onDeleted,
+}: {
+    appointment: any;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    onDeleted?: () => void;
+}) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
+    const dateObj = new Date(appointment.date);
+    // Pad to 2 digits for inputs
+    const yyyy = dateObj.getFullYear();
+    const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const dd = String(dateObj.getDate()).padStart(2, "0");
+    
+    const hh = String(dateObj.getHours()).padStart(2, "0");
+    const min = String(dateObj.getMinutes()).padStart(2, "0");
+
     const [formData, setFormData] = useState({
-        title: "",
-        date: "",
-        time: "",
-        type: "Audiência",
-        status: "Normal",
-        description: "",
+        title: appointment.title,
+        date: `${yyyy}-${mm}-${dd}`,
+        time: `${hh}:${min}`,
+        type: appointment.type,
+        status: appointment.status,
+        description: appointment.description || "",
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -44,7 +59,6 @@ export function NewAppointmentDialog() {
         setLoading(true);
 
         try {
-            // Combine date and time
             const dateTime = new Date(`${formData.date}T${formData.time}`);
 
             const payload = {
@@ -55,48 +69,58 @@ export function NewAppointmentDialog() {
                 description: formData.description,
             };
 
-            const res = await fetch("/api/appointments", {
-                method: "POST",
+            const res = await fetch(`/api/appointments/${appointment.id}`, {
+                method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
             });
 
             if (res.ok) {
-                setOpen(false);
-                setFormData({
-                    title: "",
-                    date: "",
-                    time: "",
-                    type: "Audiência",
-                    status: "Normal",
-                    description: "",
-                });
-                router.refresh();
+                onOpenChange(false);
                 window.location.reload();
             } else {
-                alert("Erro ao criar compromisso");
+                alert("Erro ao editar compromisso");
             }
         } catch (error) {
             console.error(error);
-            alert("Erro ao criar compromisso");
+            alert("Erro ao editar compromisso");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!confirm("Tem certeza que deseja excluir esta reunião?")) return;
+        setLoading(true);
+
+        try {
+            const res = await fetch(`/api/appointments/${appointment.id}`, {
+                method: "DELETE",
+            });
+
+            if (res.ok) {
+                onOpenChange(false);
+                if (onDeleted) onDeleted();
+                window.location.reload();
+            } else {
+                alert("Erro ao excluir compromisso");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao excluir compromisso");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg shadow-primary/20 transition-all active:scale-95">
-                    <Plus className="mr-2 h-4 w-4" /> Novo Compromisso
-                </Button>
-            </DialogTrigger>
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[500px] glassmorphism border-primary/30 p-6">
                 <form onSubmit={handleSubmit}>
                     <DialogHeader>
-                        <DialogTitle className="text-foreground text-xl">Novo Compromisso</DialogTitle>
+                        <DialogTitle className="text-foreground text-xl">Editar Compromisso</DialogTitle>
                         <DialogDescription className="text-muted-foreground">
-                            Adicione um novo evento à sua agenda.
+                            Altere os detalhes do compromisso ou exclua-o.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-6">
@@ -174,9 +198,12 @@ export function NewAppointmentDialog() {
                             />
                         </div>
                     </div>
-                    <DialogFooter>
-                        <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-6">
-                            {loading ? "Salvando..." : "Salvar Compromisso"}
+                    <DialogFooter className="flex justify-between w-full sm:justify-between gap-2">
+                        <Button type="button" variant="destructive" onClick={handleDelete} disabled={loading} className="bg-red-500/10 text-red-500 hover:bg-red-500/20 border-red-500/30">
+                            Excluir
+                        </Button>
+                        <Button type="submit" disabled={loading} className="bg-primary hover:bg-primary/90 text-white font-bold px-8">
+                            {loading ? "Salvando..." : "Salvar Alterações"}
                         </Button>
                     </DialogFooter>
                 </form>

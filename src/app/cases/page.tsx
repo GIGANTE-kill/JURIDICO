@@ -58,14 +58,14 @@ export default function CasesPage() {
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'Open':
-            case 'Pendente': return 'bg-blue-100 text-blue-800 hover:bg-blue-100 border-blue-200';
+            case 'Pendente': return 'bg-primary/10 text-primary border-primary/30';
             case 'In Progress':
-            case 'Em Andamento': return 'bg-yellow-100 text-yellow-800 hover:bg-yellow-100 border-yellow-200';
+            case 'Em Andamento': return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30';
             case 'Suspended':
-            case 'Cancelado': return 'bg-red-100 text-red-800 hover:bg-red-100 border-red-200';
+            case 'Cancelado': return 'bg-red-500/10 text-red-500 border-red-500/30';
             case 'Closed':
-            case 'Concluído': return 'bg-green-100 text-green-800 hover:bg-green-100 border-green-200';
-            default: return 'bg-gray-100 text-gray-800';
+            case 'Concluído': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30';
+            default: return 'bg-gray-500/10 text-gray-400 border-white/5';
         }
     }
 
@@ -82,63 +82,63 @@ export default function CasesPage() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Casos Jurídicos</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-foreground">Casos Jurídicos</h1>
                 <NewCaseDialog />
             </div>
 
             <div className="flex items-center gap-4">
                 <div className="relative flex-1 max-w-sm">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                    <Input placeholder="Buscar processos..." className="pl-9" />
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input placeholder="Buscar processos..." className="pl-9 bg-background/50 border-white/5 text-foreground focus:border-primary/50 focus:ring-primary/20" />
                 </div>
             </div>
 
-            <Card>
-                <CardHeader className="p-4">
-                    <CardTitle className="text-base">Processos Recentes</CardTitle>
+            <Card className="floating-surface">
+                <CardHeader className="p-4 border-b border-white/5">
+                    <CardTitle className="text-base text-foreground">Processos Recentes</CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
                     <Table>
                         <TableHeader>
-                            <TableRow>
-                                <TableHead>Nº Processo</TableHead>
-                                <TableHead>Título</TableHead>
-                                <TableHead>Cliente</TableHead>
-                                <TableHead>Tribunal</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Protocolo</TableHead>
-                                <TableHead className="text-right">Ações</TableHead>
+                            <TableRow className="border-b border-white/5 hover:bg-transparent">
+                                <TableHead className="text-muted-foreground">Nº Processo</TableHead>
+                                <TableHead className="text-muted-foreground">Título</TableHead>
+                                <TableHead className="text-muted-foreground">Cliente</TableHead>
+                                <TableHead className="text-muted-foreground">Tribunal</TableHead>
+                                <TableHead className="text-muted-foreground">Status</TableHead>
+                                <TableHead className="text-muted-foreground">Protocolo</TableHead>
+                                <TableHead className="text-right text-muted-foreground">Ações</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {loading ? (
-                                <TableRow>
-                                    <TableCell colSpan={7} className="h-24 text-center">Carregando...</TableCell>
+                                <TableRow className="border-b border-white/5">
+                                    <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">Carregando...</TableCell>
                                 </TableRow>
                             ) : cases.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={7} className="h-24 text-center text-gray-500">Nenhum processo encontrado.</TableCell>
+                                <TableRow className="border-b border-white/5">
+                                    <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">Nenhum processo encontrado.</TableCell>
                                 </TableRow>
                             ) : (
                                 cases.map((c) => (
-                                    <TableRow key={c.id}>
-                                        <TableCell className="font-mono text-xs">{c.caseNumber || "Sem número"}</TableCell>
-                                        <TableCell className="font-medium">{c.title}</TableCell>
-                                        <TableCell>{c.client.fullName}</TableCell>
-                                        <TableCell>{c.court || "-"}</TableCell>
+                                    <TableRow key={c.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                        <TableCell className="font-mono text-xs text-muted-foreground">{c.caseNumber || "Sem número"}</TableCell>
+                                        <TableCell className="font-medium text-foreground">{c.title}</TableCell>
+                                        <TableCell className="text-muted-foreground">{c.client.fullName}</TableCell>
+                                        <TableCell className="text-muted-foreground">{c.court || "-"}</TableCell>
                                         <TableCell>
                                             <Badge variant="outline" className={getStatusColor(c.status)}>
                                                 {getStatusLabel(c.status)}
                                             </Badge>
                                         </TableCell>
                                         <TableCell>
-                                            <Badge variant="outline" className={c.protocolStatus === 'Protocolado' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-orange-100 text-orange-800 border-orange-200'}>
+                                            <Badge variant="outline" className={c.protocolStatus === 'Protocolado' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30' : 'bg-orange-500/10 text-orange-500 border-orange-500/30'}>
                                                 {c.protocolStatus || 'Não Protocolado'}
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="text-right">
-                                            <Button variant="ghost" size="sm" asChild>
-                                                <a href={`/cases/${c.id}`}>Ver</a>
+                                            <Button variant="ghost" size="sm" className="hover:bg-primary/10 hover:text-primary text-muted-foreground" asChild>
+                                                <a href={`/cases/${c.id}`}>Ver Detalhes</a>
                                             </Button>
                                         </TableCell>
                                     </TableRow>

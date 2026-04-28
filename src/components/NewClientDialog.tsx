@@ -77,33 +77,33 @@ export function NewClientDialog() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg shadow-primary/20 transition-all active:scale-95">
                     <Plus className="mr-2 h-4 w-4" /> Novo Cliente
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px] glassmorphism border-primary/30 p-6">
                 <form onSubmit={handleSubmit}>
                     <DialogHeader>
-                        <DialogTitle>Novo Cliente</DialogTitle>
-                        <DialogDescription>
+                        <DialogTitle className="text-foreground text-xl">Novo Cliente</DialogTitle>
+                        <DialogDescription className="text-muted-foreground">
                             Preencha os dados abaixo para cadastrar um novo cliente.
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4 py-4">
+                    <div className="grid gap-4 py-6">
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="name" className="text-right">
+                            <Label htmlFor="name" className="text-right text-muted-foreground">
                                 Nome
                             </Label>
                             <Input
                                 id="name"
                                 value={formData.fullName}
                                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                                className="col-span-3"
+                                className="col-span-3 bg-background/50 border-white/10 text-foreground focus:border-primary/50 focus:ring-primary/20"
                                 required
                             />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="email" className="text-right">
+                            <Label htmlFor="email" className="text-right text-muted-foreground">
                                 Email
                             </Label>
                             <Input
@@ -111,34 +111,34 @@ export function NewClientDialog() {
                                 type="email"
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="col-span-3"
+                                className="col-span-3 bg-background/50 border-white/10 text-foreground focus:border-primary/50 focus:ring-primary/20"
                             />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="phone" className="text-right">
+                            <Label htmlFor="phone" className="text-right text-muted-foreground">
                                 Telefone
                             </Label>
                             <Input
                                 id="phone"
                                 value={formData.phone}
                                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                className="col-span-3"
+                                className="col-span-3 bg-background/50 border-white/10 text-foreground focus:border-primary/50 focus:ring-primary/20"
                             />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="taxId" className="text-right">
+                            <Label htmlFor="taxId" className="text-right text-muted-foreground">
                                 CPF/CNPJ
                             </Label>
                             <Input
                                 id="taxId"
                                 value={formData.taxId}
                                 onChange={(e) => setFormData({ ...formData, taxId: e.target.value })}
-                                className="col-span-3"
+                                className="col-span-3 bg-background/50 border-white/10 text-foreground focus:border-primary/50 focus:ring-primary/20"
                                 placeholder="000.000.000-00"
                             />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="password" className="text-right">
+                            <Label htmlFor="password" className="text-right text-muted-foreground">
                                 Senha
                             </Label>
                             <Input
@@ -146,13 +146,13 @@ export function NewClientDialog() {
                                 type="password"
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                className="col-span-3"
+                                className="col-span-3 bg-background/50 border-white/10 text-foreground focus:border-primary/50 focus:ring-primary/20"
                                 placeholder="Crie uma senha de acesso"
                             />
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button type="submit" disabled={loading}>
+                        <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-6">
                             {loading ? "Salvando..." : "Salvar Cliente"}
                         </Button>
                     </DialogFooter>
